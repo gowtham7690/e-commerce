@@ -55,11 +55,14 @@ function ShoppingListing() {
     };
     async function handleGetProduct(getCurProdcut)
     {
-
         const result = await dispatch(getProductDetails(getCurProdcut));
         setOpen(true);
-
     }
+    function handleCartProduct(currentProductId){
+        // dispatch(addCart())
+        console.log(currentProductId);
+    }
+
     return (
         <div className="relative grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
             <ProductFilter filter={filter} handleFilter={handleFilter} />
@@ -99,7 +102,7 @@ function ShoppingListing() {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {productList && productList.length > 0 ? 
-                        productList.map(items => <ShoppingProduct key={items._id }handleGetProduct={handleGetProduct} product={items} />) 
+                        productList.map(items => <ShoppingProduct key={items._id } handleCartProduct = {handleCartProduct} handleGetProduct={handleGetProduct} product={items} />) 
                         : null 
                     }
                 </div>

@@ -1,6 +1,6 @@
 import { ShoppingCart } from 'lucide-react';
 
-function ShoppingProduct({ product , handleGetProduct}) {
+function ShoppingProduct({ product , handleGetProduct , handleCartProduct}) {
     return (
         <div  className="bg-white shadow-lg rounded-lg overflow-hidden grid grid-rows-[1fr_auto]">
             <img onClick = {() => handleGetProduct(product._id)}
@@ -33,7 +33,7 @@ function ShoppingProduct({ product , handleGetProduct}) {
                 </div>
 
             </div>
-                <button 
+                <button onClick = {() => handleCartProduct(product._id)}
                     className="w-full flex items-center justify-center gap-2 bg-black text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     <ShoppingCart className="h-5 w-5" />

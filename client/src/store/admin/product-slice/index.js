@@ -15,7 +15,7 @@ export const addnewProduct = createAsyncThunk('/products/addnewproduct',async (f
     return result?.data;
     }
 );
-export const fetchAllProduct = createAsyncThunk('/products/fetchAllProduct',async (formData) => {
+export const fetchAllProduct = createAsyncThunk('/products/fetchAllProduct',async () => {
     const result = await axios.get('http://localhost:3000/api/admin/product/get');
     return result?.data;
     }

@@ -7,6 +7,7 @@ const authRouter = require('./routes/auth/auth-routes');
 const port = process.env.PORT || 3000;
 const adminProductRoutes = require('./routes/admin/product-routes')
 const shopProductRoutes = require('./routes/shop/product-route')
+const cartProductRoutes = require('./routes/shop/cart-route')
 mongoose.connect('mongodb://localhost:27017/ecommerce-shop')
 .then(() => console.log('mongodb connected'))
 .catch((err) => console.log(err));
@@ -33,5 +34,6 @@ app.use(express.json());
 app.use('/api', authRouter);
 app.use('/api/admin/product' , adminProductRoutes)
 app.use('/api/shop/product' , shopProductRoutes)
+app.use('/api/shop/cart' , cartProductRoutes)
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`app listening on port ${port}!`)) 
