@@ -1,6 +1,6 @@
 import { StarIcon } from "lucide-react";
 
-function ProductDetailModal({ open, product, setOpen }) {
+function ProductDetailModal({ handleCartProduct , open, product, setOpen }) {
     if (!open) return null;
 
     return (
@@ -50,7 +50,7 @@ function ProductDetailModal({ open, product, setOpen }) {
 
                 <p className="text-sm text-gray-500 mb-4">Stock Available: {product.totalStock}</p>
 
-                <button 
+                <button onClick = {() => handleCartProduct(product._id)}
                     className="w-full flex items-center justify-center gap-2 bg-black text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     Add to Cart

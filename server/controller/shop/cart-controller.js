@@ -5,12 +5,13 @@ const addToCart = async (req, res) => {
     try {
         const { userId, productId, quantity } = req.body;
         if (!userId || !productId || !quantity) {
+            
             return res.status(400).json({
                 success: false,
                 message: "Invalid data provided"
             });
         }
-
+        
         const prod = await Product.findById(productId);
         if (!prod) {
             return res.status(404).json({
@@ -23,9 +24,9 @@ const addToCart = async (req, res) => {
         if (!cart) {
             cart = new Cart({ userId, items: [] });
         }
-
+        
         const findProductIndex = cart.items.findIndex(item => item.productId.toString() === productId);
-
+        
         if (findProductIndex === -1) {
             cart.items.push({ productId, quantity });
         } else {
@@ -33,6 +34,12 @@ const addToCart = async (req, res) => {
         }
 
         await cart.save();
+
+        await cart.populate({
+            path : 'items.productId',
+            select : 'image title price salePrice',
+        });
+        
 
         res.status(200).json({
             success: true,
@@ -130,6 +137,11 @@ const updateCart = async (req, res) => {
 
         await cart.save();
 
+        await cart.populate({
+            path : 'items.productId',
+            select : 'image title price salePrice',
+        });
+
         const populatedCart = cart.items.map(item => ({
             productId: item.productId._id,
             image: item.productId ? item.productId.image : null,
@@ -174,9 +186,14 @@ const deleteFromCart = async (req, res) => {
             });
         }
 
+        console.log(productId);
         cart.items = cart.items.filter(item => item.productId.toString() !== productId);
         await cart.save();
 
+        await cart.populate({
+            path : 'items.productId',
+            select : 'image title price salePrice',
+        });
         const populatedCart = cart.items.map(item => ({
             productId: item.productId ? item.productId._id : null,
             image: item.productId ? item.productId.image : null,

@@ -6,10 +6,12 @@ import { fetchAllFilteredProduct , getProductDetails} from "../../store/shop/pro
 import ShoppingProduct from "../../components/shopping/product-title";
 import { useSearchParams } from 'react-router-dom';
 import ProductDetailModal from "../../components/shopping/product-details";
+import {addCart} from "../../store/shop/cart-slice";
 
 function ShoppingListing() {
     const dispatch = useDispatch(); 
     const { productList  , productDetails} = useSelector(state => state.shopProducts);
+    const user = useSelector(state => state.auth);
     const [sortMenuOpen, setSortMenuOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState(null);
@@ -59,8 +61,8 @@ function ShoppingListing() {
         setOpen(true);
     }
     function handleCartProduct(currentProductId){
-        // dispatch(addCart())
-        console.log(currentProductId);
+        dispatch(addCart ({userId :user.user.id ,productId :currentProductId ,quantity : 1})).then((data) =>console.log(data))
+
     }
 
     return (
@@ -108,7 +110,7 @@ function ShoppingListing() {
                 </div>
             </div>
             {
-                open && productDetails ?  <ProductDetailModal open = {open} product = {productDetails} setOpen={setOpen}/> : null
+                open && productDetails ?  <ProductDetailModal handleCartProduct = {handleCartProduct} open = {open} product = {productDetails} setOpen={setOpen}/> : null
             }
         </div>
     );

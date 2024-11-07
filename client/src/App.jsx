@@ -9,6 +9,7 @@ import Dashboard from './pages/admin/dashboard.jsx';
 import Shopping from './components/shopping/layout.jsx';
 import Notfound from './pages/not found/index.jsx';
 import ShoppingHome from './pages/shopping/home.jsx';
+import ShoppingCart from './pages/shopping/cart.jsx';
 import ShoppingListing from './pages/shopping/listing.jsx';
 import ShoppingCheckout from './pages/shopping/checkout.jsx';
 import ShoppingAccount from './pages/shopping/account.jsx';
@@ -58,9 +59,8 @@ function App() {
         }>
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
-          <Route path="checkout" element={
-              <ShoppingCheckout />
-          } />
+          <Route path="cart" element={<ShoppingCart />} />
+          <Route path="checkout" element= {<ShoppingCheckout />} />
           <Route path="account" element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingAccount />
