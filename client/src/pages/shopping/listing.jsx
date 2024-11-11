@@ -1,16 +1,16 @@
-import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from 'react';
-import ProductFilter from "../../components/shopping/filter";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProduct , getProductDetails} from "../../store/shop/product-slice";
-import ShoppingProduct from "../../components/shopping/product-title";
+import { fetchAllFilteredProduct, getProductDetails } from "../../store/shop/product-slice";
+import { addCart } from "../../store/shop/cart-slice";
 import { useSearchParams } from 'react-router-dom';
+import ProductFilter from "../../components/shopping/filter";
+import ShoppingProduct from "../../components/shopping/product-title";
 import ProductDetailModal from "../../components/shopping/product-details";
-import {addCart} from "../../store/shop/cart-slice";
+import { ArrowUpDownIcon } from "lucide-react";
 
 function ShoppingListing() {
     const dispatch = useDispatch(); 
-    const { productList  , productDetails} = useSelector(state => state.shopProducts);
+    const { productList, productDetails } = useSelector(state => state.shopProducts);
     const user = useSelector(state => state.auth);
     const [sortMenuOpen, setSortMenuOpen] = useState(false);
     const [open, setOpen] = useState(false);
@@ -19,6 +19,15 @@ function ShoppingListing() {
     const [search, setSearchParams] = useSearchParams();
 
     useEffect(() => {
+        // Load initial filter from sessionStorage if available
+        const storedFilter = JSON.parse(sessionStorage.getItem('filter'));
+        if (storedFilter) {
+            setFilter(storedFilter);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Fetch filtered products based on the filter and sort parameters
         dispatch(fetchAllFilteredProduct({ filterParams: filter, sortParams: sort }));
     }, [dispatch, sort, filter]);
 
@@ -32,6 +41,7 @@ function ShoppingListing() {
         }
         return queryParams.join('&');
     }    
+
     useEffect(() => {
         if (filter && Object.keys(filter).length > 0) {
             const queryString = createSearchParams(filter);
@@ -55,14 +65,15 @@ function ShoppingListing() {
         setFilter(updatedFilter);
         sessionStorage.setItem('filter', JSON.stringify(updatedFilter));
     };
-    async function handleGetProduct(getCurProdcut)
-    {
-        const result = await dispatch(getProductDetails(getCurProdcut));
+
+    async function handleGetProduct(getCurProdcut) {
+        await dispatch(getProductDetails(getCurProdcut));
         setOpen(true);
     }
-    function handleCartProduct(currentProductId){
-        dispatch(addCart ({userId :user.user.id ,productId :currentProductId ,quantity : 1})).then((data) =>console.log(data))
 
+    function handleCartProduct(currentProductId) {
+        dispatch(addCart({ userId: user.user.id, productId: currentProductId, quantity: 1 }))
+            .then((data) => console.log(data));
     }
 
     return (
@@ -104,13 +115,13 @@ function ShoppingListing() {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {productList && productList.length > 0 ? 
-                        productList.map(items => <ShoppingProduct key={items._id } handleCartProduct = {handleCartProduct} handleGetProduct={handleGetProduct} product={items} />) 
+                        productList.map(items => <ShoppingProduct key={items._id} handleCartProduct={handleCartProduct} handleGetProduct={handleGetProduct} product={items} />) 
                         : null 
                     }
                 </div>
             </div>
             {
-                open && productDetails ?  <ProductDetailModal handleCartProduct = {handleCartProduct} open = {open} product = {productDetails} setOpen={setOpen}/> : null
+                open && productDetails ?  <ProductDetailModal handleCartProduct={handleCartProduct} open={open} product={productDetails} setOpen={setOpen} /> : null
             }
         </div>
     );

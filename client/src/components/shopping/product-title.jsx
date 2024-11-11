@@ -1,6 +1,7 @@
 import { ShoppingCart } from 'lucide-react';
 
 function ShoppingProduct({ product , handleGetProduct , handleCartProduct}) {
+    // console.log("product", product) ;
     return (
         <div  className="bg-white shadow-lg rounded-lg overflow-hidden grid grid-rows-[1fr_auto]">
             <img onClick = {() => handleGetProduct(product._id)}

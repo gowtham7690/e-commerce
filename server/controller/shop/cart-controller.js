@@ -186,7 +186,6 @@ const deleteFromCart = async (req, res) => {
             });
         }
 
-        console.log(productId);
         cart.items = cart.items.filter(item => item.productId.toString() !== productId);
         await cart.save();
 

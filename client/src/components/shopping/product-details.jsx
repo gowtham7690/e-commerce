@@ -8,7 +8,7 @@ function ProductDetailModal({ handleCartProduct , open, product, setOpen }) {
             <div className="bg-white rounded-lg overflow-hidden w-full max-w-lg p-6 relative">
                 <button
                     onClick={() => setOpen(false)}
-                    className="absolute top-4 right-4 text-gray-500 hover:text-black">
+                    className="text-3xl absolute top-2 right-4 text-gray-500 hover:text-black">
                     &times;
                 </button>
                 
