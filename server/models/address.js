@@ -6,7 +6,7 @@ const AddressSchema = mongoose.Schema({
     city : String,
     pincode : Number,
     phone : Number,
-    notes : String
+    state : String
 } , {timestamps : true})
 
 module.exports = mongoose.model('address' , AddressSchema)

@@ -18,6 +18,9 @@ import UnauthPage from './pages/not found/unauth-page.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { checkAuth } from './store/auth-slice/index.js';
+import PaymentSuccess from './pages/shopping/payment-accept.jsx';
+import PaymentRejected from './pages/shopping/payment-reject.jsx';
+import PaymentReturn from './pages/shopping/payment-pending.jsx';
 
 function App() {
  
@@ -61,10 +64,14 @@ function App() {
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="cart" element={<ShoppingCart />} />
           <Route path="checkout" element= {<ShoppingCheckout />} />
+          <Route path="paypal-return" element= {<PaymentReturn />} />
+          <Route path="paypal-success" element= {<PaymentSuccess />} />
+          <Route path="paypal-cancel" element= {<PaymentRejected />} />
           <Route path="account" element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingAccount />
             </CheckAuth>
+
           } />
         </Route>
 

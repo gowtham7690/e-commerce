@@ -9,6 +9,7 @@ const adminProductRoutes = require('./routes/admin/product-routes')
 const shopProductRoutes = require('./routes/shop/product-route')
 const cartProductRoutes = require('./routes/shop/cart-route')
 const shopAddressRoutes = require('./routes/shop/address-route')
+const shopOrderRoutes = require('./routes/shop/order-route')
 
 mongoose.connect('mongodb://localhost:27017/ecommerce-shop')
 
@@ -39,6 +40,7 @@ app.use('/api/admin/product' , adminProductRoutes)
 app.use('/api/shop/product' , shopProductRoutes)
 app.use('/api/shop/cart' , cartProductRoutes)
 app.use('/api/shop/address' , shopAddressRoutes)
+app.use('/api/shop/order' , shopOrderRoutes)
 
 
 app.get('/', (req, res) => res.send('Hello World!'))

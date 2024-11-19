@@ -2,8 +2,9 @@ const address = require('../../models/address')
 
 const addAddress = async(req , res) => {
     try{
-        const {userId , Address , city , pincode , phone , notes} = req.body;
-        if(!userId || !Address || !city || !pincode || !phone || !notes) 
+        const {userId , Address , city , pincode , phone , state} = req.body;
+        console.log(req.body);
+        if(!userId || !Address || !city || !pincode || !phone || !state) 
         {
             return res.status(400).json({
                 success : false ,
@@ -11,7 +12,7 @@ const addAddress = async(req , res) => {
                }) 
             }
             const newAddress = new address({
-            userId , Address , city , pincode , phone , notes
+            userId , Address , city , pincode , phone , state
         })
         await newAddress.save();
 
@@ -42,6 +43,7 @@ const fetchAddress = async(req , res) => {
         }
 
         const Address = await address.find({userId})
+        // console.log(userId);
         return res.status(200).json({
             success : true ,
             data : Address,
@@ -60,7 +62,8 @@ const updateAddress = async (req, res) => {
     try {
         const { userId, addressId } = req.params;
         const {formData} = req.body;
-        const { Address, city, pincode, phone, notes } = formData ;
+        console.log(formData)
+        const { Address, city, pincode, phone, state } = formData ;
         if (!userId || !addressId) {
             return res.status(400).json({
                 success: false,
@@ -69,7 +72,7 @@ const updateAddress = async (req, res) => {
         }
         const updatedAddress = await address.findOneAndUpdate(
             { _id: addressId, userId },
-            { Address, city, pincode, phone, notes },
+            { Address, city, pincode, phone, state },
             { new: true } 
         );
         if (!updatedAddress) {

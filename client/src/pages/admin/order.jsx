@@ -1,6 +1,10 @@
+import { useState } from "react";
+import AdminOrder from "../../components/admin/order";
+
 function Order() {
+    const [open , setOpen] = useState(false);
     return ( <>
-    <div>order</div>
+    <AdminOrder open = {open} setOpen = {setOpen}/>
     </> );
 }
 

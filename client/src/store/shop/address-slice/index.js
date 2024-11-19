@@ -6,23 +6,23 @@ const initialState = {
     addressList : []
 }
 
-const getAddress = createAsyncThunk('/get/address',(id) => {
-    const response = axios.get(`http://localhost:3000/api/shop/address/get/:${id}`);
+export const getAddress = createAsyncThunk('/get/address',async (userId) => {
+    const response = await axios.get(`http://localhost:3000/api/shop/address/get/${userId}`);
 
     return response.data;
 })
-const addAddress = createAsyncThunk('/add/address',({userId , address , city , pincode , phone , notes}) => {
-    const response = axios.post(`http://localhost:3000/api/shop/address/add` , userId , address , city , pincode , phone , notes);
+export const addAddress = createAsyncThunk('/add/address', async ({ userId, Address, city, pincode, phone, state }) => {
+        const response = await axios.post('http://localhost:3000/api/shop/address/add', { userId,Address,city,pincode,phone,state});
+        return response.data;
+});
+export const updateAddress = createAsyncThunk('/update/address',async ({userId , addressId , formData}) => {
+    
+    const response = await axios.put(`http://localhost:3000/api/shop/address/update/${userId}/${addressId}`,{formData});
 
     return response.data;
 })
-const updateAddress = createAsyncThunk('/update/address',({userId , addressId , formData}) => {
-    const response = axios.put(`http://localhost:3000/api/shop/address/update/:${userId}/:${addressId}`,formData);
-
-    return response.data;
-})
-const deleteAddress = createAsyncThunk('/delete/address',({userId , addressId}) => {
-    const response = axios.delete(`http://localhost:3000/api/shop/address/delete/:${userId}/:${addressId}`);
+export const deleteAddress = createAsyncThunk('/delete/address',async ({userId , addressId}) => {
+    const response = await axios.delete(`http://localhost:3000/api/shop/address/delete/${userId}/${addressId}`);
 
     return response.data;
 })
